@@ -1,0 +1,53 @@
+#X3D V3.3 utf8
+
+Transform {
+    translation 0 0 0
+    children [
+    Collision {
+        collide FALSE
+        children [
+            DEF Prox ProximitySensor {size 2 2 2}
+            Shape { 
+                appearance Appearance {
+                    material Material { transparency 0.6 }
+                }
+                geometry Box {size 4 4 4}
+            }
+        ]
+    }
+    ]
+}
+
+DEF Obiekt Transform {
+    translation -10 0 -20
+    scale 0 0 0    
+    children [
+      Shape { 
+        appearance Appearance {
+          material Material { diffuseColor 0 1 0 }  
+        }
+        geometry Sphere {}
+      }
+    ]
+}
+
+DEF Czas TimeSensor {cycleInterval 5}
+
+DEF Ruch PositionInterpolator {
+  key [ 0, 0.25, 0.5, 0.75 , 1 ]
+  keyValue [ -5 0 -20, 0 5 -20, 5 0 -20, 0 -5 -20, -5 0 -20]
+}
+
+DEF Skala PositionInterpolator {
+  key [ 0, 1 ]
+  keyValue [ 1 1 1,  1 1 1 ]
+}
+
+ROUTE Czas.fraction_changed TO Ruch.set_fraction
+ROUTE Ruch.value_changed    TO Obiekt.set_translation
+
+ROUTE Czas.fraction_changed TO Skala.set_fraction
+ROUTE Skala.value_changed   TO Obiekt.set_scale
+
+ROUTE Prox.enterTime TO Czas.set_startTime
+ROUTE Prox.isActive  TO Czas.set_loop

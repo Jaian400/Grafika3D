@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://www.x3dom.org/download/dev/x3dom.js"></script>
+  <link rel="stylesheet" href="https://www.x3dom.org/download/dev/x3dom.css">
+  <style>
+    x3d { width: 600px; height: 400px; }
+  </style>
+</head>
+<body>
+  <x3d>
+    <scene> 
+        <shape> 
+            <appearance> 
+            <material diffuseColor='1 1 0'></material> 
+            </appearance> 
+            <box></box> 
+        </shape>  
+            <transform id="trans" translation='6 0 0'> 
+            <shape> 
+            <appearance> 
+            <material diffuseColor='0 1 0'></material> 
+            </appearance> 
+            <sphere></sphere> 
+            </shape> 
+        </transform> 
+    </scene>
+  </x3d>
+</body>
+
+<script>
+    const r = 3;
+    let angle = 0;
+    const trans = document.getElementById('trans');
+
+    function getCirclePosition(radius, a) {
+        const x = radius * Math.cos(a);
+        const y = 0;
+        const z = radius * Math.sin(a);
+        return `${x} ${y} ${z}`;
+    }
+
+    function loop() {
+        angle += 0.01;
+
+        const position = getCirclePosition(r, angle);
+
+        trans.setAttribute('translation', position);
+
+        requestAnimationFrame(loop);
+    }
+
+    requestAnimationFrame(loop);
+</script>
+
+</html>

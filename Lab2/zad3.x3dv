@@ -1,0 +1,314 @@
+#X3D V3.3 utf8D
+
+DEF SUN Transform {
+    children Shape {
+        appearance Appearance {
+            texture ImageTexture {
+                url "textures/sun.jpg"
+            }
+            material Material {
+            }
+        }
+        geometry Sphere {
+            radius 10
+        }
+    }
+}
+
+DEF TimerSun TimeSensor { 
+    cycleInterval 80
+    loop TRUE 
+}
+
+DEF TimerMercury TimeSensor { 
+    cycleInterval 5
+    loop TRUE 
+}
+
+DEF TimerMercury2 TimeSensor { 
+    cycleInterval 20
+    loop TRUE 
+}
+
+DEF TimerVenus TimeSensor { 
+    cycleInterval 10
+    loop TRUE 
+}
+
+DEF TimerVenus2 TimeSensor { 
+    cycleInterval 10
+    loop TRUE 
+}
+
+DEF TimerEarth TimeSensor { 
+    cycleInterval 15
+    loop TRUE 
+}
+
+DEF TimerEarth2 TimeSensor { 
+    cycleInterval 1
+    loop TRUE 
+}
+
+DEF TimerMars TimeSensor { 
+    cycleInterval 17
+    loop TRUE 
+}
+
+DEF TimerMars2 TimeSensor { 
+    cycleInterval 17
+    loop TRUE 
+}
+
+DEF TimerJupter TimeSensor { 
+    cycleInterval 28
+    loop TRUE 
+}
+
+DEF TimerJupter2 TimeSensor { 
+    cycleInterval 1000
+    loop TRUE 
+}
+
+DEF TimerSaturn TimeSensor { 
+    cycleInterval 40
+    loop TRUE 
+}
+
+DEF TimerSaturn2 TimeSensor { 
+    cycleInterval 4
+    loop TRUE 
+}
+
+DEF TimerUranus TimeSensor { 
+    cycleInterval 54
+    loop TRUE 
+}
+
+DEF TimerUranus2 TimeSensor { 
+    cycleInterval 54
+    loop TRUE 
+}
+
+DEF TimerNeptune TimeSensor { 
+    cycleInterval 70
+    loop TRUE 
+}
+
+DEF TimerNeptune2 TimeSensor { 
+    cycleInterval 70
+    loop TRUE 
+}
+
+PROTO OInter [
+    inputOnly  SFFloat    set_fraction
+    outputOnly SFRotation value_changed     
+] {
+    OrientationInterpolator {
+        set_fraction  IS set_fraction      
+        value_changed IS value_changed
+        key [0 0.5 1]
+        keyValue [
+            0 1 0 0
+            0 1 0 3.14
+            0 1 0 6.28
+        ]
+    }
+}
+
+PROTO Planet [
+    inputOutput SFRotation rot 0 1 0 0
+    field SFVec3f pos 15 0 0
+    field MFString tex "textures/sun.jpg"
+    field SFFloat r 1
+] {
+    Transform {
+        translation IS pos
+        rotation IS rot
+        children Shape {
+            appearance Appearance {
+                texture ImageTexture {
+                    url IS tex
+                }
+            }
+            geometry Sphere {
+                radius IS r
+            }
+        }
+    }
+}
+
+DEF MercuryOrbit Transform {
+    children DEF MERCURY Planet {
+        pos 15 0 0
+        r 0.6
+        tex "textures/2k_mercury.jpg"
+    }
+}
+
+DEF VenusOrbit Transform {
+    children DEF VENUS Planet {
+        pos 20 0 0
+        r 0.8
+        tex "textures/2k_venus_atmosphere.jpg"
+    }
+}
+
+DEF EarthOrbit Transform {
+    children DEF EARTH Planet {
+        pos 25 0 0
+        r 1
+        tex "textures/2k_earth_daymap.jpg"
+    }
+}
+
+DEF MarsOrbit Transform {
+    children DEF MARS Planet {
+        pos 30 0 0
+        r 1
+        tex "textures/2k_mars.jpg"
+    }
+}
+
+DEF JupiterOrbit Transform {
+    children DEF JUPITER Planet {
+        pos 40 0 0
+        r 2.5
+        tex "textures/2k_jupiter.jpg"
+    }
+}
+
+DEF SaturnOrbit Transform {
+    children [
+        DEF SATURN Planet {
+            pos 48 0 0
+            r 2.1
+            tex "textures/2k_saturn.jpg"
+        }
+        Transform {
+            translation 48 0 0
+            children Shape {
+                appearance Appearance {
+                    texture ImageTexture {
+                        url "textures/2k_saturn_ring_alpha.png"
+                    }
+                }
+                geometry Cylinder {
+                    height 0.0001
+                    radius 3
+                }
+            }
+        }
+    ]
+}
+
+DEF UranusOrbit Transform {
+    children DEF URANUS Planet {
+        pos 56 0 0
+        r 1.9
+        tex "textures/2k_uranus.jpg"
+    }
+}
+
+DEF NeptuneOrbit Transform {
+    children DEF NEPTUNE Planet {
+        pos 64 0 0
+        r 1.8
+        tex "textures/2k_neptune.jpg"
+    }
+}
+
+DEF SunOInter OInter {
+}
+
+DEF MercuryOInter OInter {
+}
+
+DEF MercuryOInter2 OInter {
+}
+
+DEF VenusOInter OInter {
+}
+
+DEF VenusOInter2 OInter {
+}
+
+DEF EarthOInter OInter {
+}
+
+DEF EarthOInter2 OInter {
+}
+
+DEF MarsOInter OInter {
+}
+
+DEF MarsOInter2 OInter {
+}
+
+DEF JupiterOInter OInter {
+}
+
+DEF JupiterOInter2 OInter {
+}
+
+DEF SaturnOInter OInter {
+}
+
+DEF SaturnOInter2 OInter {
+}
+
+DEF UranusOInter OInter {
+}
+
+DEF UranusOInter2 OInter {
+}
+
+DEF NeptuneOInter OInter {
+}
+
+DEF NeptuneOInter2 OInter {
+}
+
+ROUTE TimerSun.fraction_changed TO SunOInter.set_fraction
+ROUTE SunOInter.value_changed TO SUN.set_rotation
+
+ROUTE TimerMercury.fraction_changed TO MercuryOInter.set_fraction
+ROUTE TimerMercury2.fraction_changed TO MercuryOInter2.set_fraction
+ROUTE MercuryOInter.value_changed TO MercuryOrbit.set_rotation
+
+ROUTE TimerVenus.fraction_changed TO VenusOInter.set_fraction
+ROUTE TimerVenus2.fraction_changed TO VenusOInter2.set_fraction
+ROUTE VenusOInter.value_changed TO VenusOrbit.set_rotation
+
+ROUTE TimerEarth.fraction_changed TO EarthOInter.set_fraction
+ROUTE TimerEarth2.fraction_changed TO EarthOInter2.set_fraction
+ROUTE EarthOInter.value_changed TO EarthOrbit.set_rotation
+
+ROUTE TimerMars.fraction_changed TO MarsOInter.set_fraction
+ROUTE TimerMars2.fraction_changed TO MarsOInter2.set_fraction
+ROUTE MarsOInter.value_changed TO MarsOrbit.set_rotation
+
+ROUTE TimerJupter.fraction_changed TO JupiterOInter.set_fraction
+ROUTE TimerJupter2.fraction_changed TO JupiterOInter2.set_fraction
+ROUTE JupiterOInter.value_changed TO JupiterOrbit.set_rotation
+
+ROUTE TimerSaturn.fraction_changed TO SaturnOInter.set_fraction
+ROUTE TimerSaturn2.fraction_changed TO SaturnOInter2.set_fraction
+ROUTE SaturnOInter.value_changed TO SaturnOrbit.set_rotation
+
+ROUTE TimerUranus.fraction_changed TO UranusOInter.set_fraction
+ROUTE TimerUranus2.fraction_changed TO UranusOInter2.set_fraction
+ROUTE UranusOInter.value_changed TO UranusOrbit.set_rotation
+
+ROUTE TimerNeptune.fraction_changed TO NeptuneOInter.set_fraction
+ROUTE TimerNeptune2.fraction_changed TO NeptuneOInter2.set_fraction
+ROUTE NeptuneOInter.value_changed TO NeptuneOrbit.set_rotation
+
+ROUTE MercuryOInter2.value_changed TO MERCURY.rot
+ROUTE VenusOInter2.value_changed TO VENUS.rot
+ROUTE EarthOInter2.value_changed TO EARTH.rot
+ROUTE MarsOInter2.value_changed TO MARS.rot
+ROUTE JupiterOInter2.value_changed TO JUPITER.rot
+ROUTE SaturnOInter2.value_changed TO SATURN.rot
+ROUTE UranusOInter2.value_changed TO URANUS.rot
+ROUTE NeptuneOInter2.value_changed TO NEPTUNE.rot

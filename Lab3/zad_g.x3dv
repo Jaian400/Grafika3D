@@ -1,0 +1,180 @@
+#X3D V3.3 utf8
+
+DirectionalLight {
+  direction -0.5 -1 -0.5
+  intensity 1
+}
+
+PointLight {
+  location -6 0.5 0
+  radius 10
+  intensity 0.7
+  color 1 1 1
+}
+
+Transform {
+    translation -6 0.5 0
+    children [
+        Shape {
+            appearance Appearance {
+            material Material { 
+                diffuseColor 0 0.5 0.4
+            }
+            }
+            geometry Box {
+
+            }
+        }
+    ]
+}
+
+PROTO Filar [
+    field SFFloat r 3
+    field SFFloat h 10
+] {
+  Shape {
+    appearance Appearance {
+      material Material { 
+        diffuseColor 0.5 0.5 0.5
+      }
+    }
+    geometry Cylinder { 
+        radius 3
+        height 10
+    }
+  }
+}
+
+PROTO Podloga [
+    field SFVec3f pos 0 0 0
+] {
+    Transform {
+        translation IS pos
+        children [
+        Shape {
+            appearance Appearance {
+            material Material { 
+                diffuseColor 0.6 0.6 0.6
+            }
+            }
+            geometry Box {
+                size 44 2 44
+            }
+        }
+        ]
+    }
+}
+
+Transform {
+  translation 0 -6 0
+  children [
+    Podloga { }
+  ]
+}
+
+Transform {
+  translation 0 6 0
+  children [
+    Podloga { }
+  ]
+}
+
+# --------------------------------------------------
+
+Transform {
+  translation -6 0 -18
+  children [
+    Filar { }
+  ]
+}
+
+Transform {
+  translation 6 0 -18
+  children [
+    Filar { }
+  ]
+}
+
+Transform {
+  translation 18 0 -18
+  children [
+    Filar { }
+  ]
+}
+
+Transform {
+  translation -18 0 -18
+  children [
+    Filar { }
+  ]
+}
+
+# -------------------------------------------------
+
+Transform {
+  translation -6 0 18
+  children [
+    Filar { }
+  ]
+}
+
+Transform {
+  translation 6 0 18
+  children [
+    Filar { }
+  ]
+}
+
+Transform {
+  translation 18 0 18
+  children [
+    Filar { }
+  ]
+}
+
+Transform {
+  translation -18 0 18
+  children [
+    Filar { }
+  ]
+}
+
+# -----------------------------
+
+Transform {
+  translation -18 0 6
+  children [
+    Filar { }
+  ]
+}
+
+Transform {
+  translation -18 0 -6
+  children [
+    Filar { }
+  ]
+}
+
+
+Transform {
+  translation 0 7 0 
+  children [
+    Shape {
+      appearance Appearance {
+        material Material { diffuseColor 0.6 0.6 0.6 }
+      }
+      geometry Extrusion {
+        crossSection [
+          0 22,
+            12 0,
+           0 -22,
+          0 22
+        ]
+        spine [
+          22 0 0,
+          -22 0 0
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+#X3D V3.3 utf8
+
+Transform {
+    
+}
+
+Transform {
+    translation 0 2 0
+    children [Shape {
+        appearance Appearance {
+            texture ImageTexture {
+                url "inicjaly.png"
+            }
+            material Material {
+            }
+        }
+        geometry Sphere {
+            radius 5
+        }
+    }
+    DirectionalLight {
+        ambientIntensity 0
+        color 1 0 0
+        direction 1 0 0
+        intensity 1
+        on TRUE
+    }
+    ]
+}

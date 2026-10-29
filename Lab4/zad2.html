@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://www.x3dom.org/download/dev/x3dom.js"></script>
+  <link rel="stylesheet" href="https://www.x3dom.org/download/dev/x3dom.css">
+  <style>
+    x3d { width: 800px; height: 600px; }
+  </style>
+</head>
+<body>
+  <x3d>
+    <scene id="scene">  
+    </scene>
+  </x3d>
+</body>
+
+<script>
+    const scene = document.getElementById('scene');
+
+    for(let i = 0; i < 5; i++){
+        const newSphereHTML = `
+            <transform id="trans${i}" translation='${i*2} 0 0'> 
+                <shape> 
+                <appearance> 
+                <material diffuseColor='0 1 0'></material> 
+                </appearance> 
+                <sphere></sphere> 
+                </shape> 
+            </transform> 
+        `
+
+        scene.insertAdjacentHTML('beforeend', newSphereHTML);
+    }
+
+</script>
+
+</html>

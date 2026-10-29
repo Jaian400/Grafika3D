@@ -1,0 +1,24 @@
+#X3D V3.3 utf8
+
+Transform {
+    children [Shape {
+        appearance Appearance {
+            texture ImageTexture {
+                url "inicjaly.png"
+            }
+            material Material {
+            }
+        }
+        geometry Sphere {
+            radius 4
+        }
+    }
+    SpotLight {
+        ambientIntensity 1
+        color 0 0 1
+        direction 1 0 0
+        intensity 1
+        on TRUE
+    }
+    ]
+}

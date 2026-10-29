@@ -1,0 +1,37 @@
+#X3D V3.3 utf8
+
+Transform {
+    children Shape {
+        geometry Sphere { 
+            size 10 10
+        }
+    }
+}
+
+
+
+Transform {
+    translation 0 0 4
+    rotation 1 0 0 28
+    children Shape {
+        appearance Appearance {
+            fillProperties NULL
+            lineProperties NULL
+            material Material {
+                emissiveColor 255 0 0
+            }
+            backMaterial NULL
+            shaders []
+            texture NULL
+            textureTransform NULL
+            receiveShadows []
+            shadowCaster TRUE
+            normalMap NULL
+            heightMap NULL
+            heightMapScale 0.01
+            blendMode NULL
+            effects []
+        }
+        geometry Cone { }
+    }
+}
