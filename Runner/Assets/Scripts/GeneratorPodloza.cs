@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,18 +18,25 @@ public class GeneratorPodloza : MonoBehaviour
 
     [HideInInspector]                             //Zmienna musi byc publiczna, ale nie chcemy zeby podczas projektowania gry przypadkiem zmienic ja w Inspectorze UNITY
     public bool graSkonczona = false;
-    static bool graRozpoczeta = false;
+    static bool graRozpoczeta = true;
     float wynik = 0;
     public static GeneratorPodloza instancja;
+    public static bool GraRozpoczeta => graRozpoczeta;
 
     [Header("Automatyczna zmiana")]
     public int progWynikuDoZmianySceny = 1000;          
     public string nazwaKolejnejSceny;                   
     bool scenaJuzZmieniona = false;                     
 
+    [Header("UI (TextMeshPro)")]
+    public TextMeshProUGUI wynikTextMesh;
+    public TextMeshProUGUI startTextMesh;
+    public TextMeshProUGUI koniecGryTextMesh;
+
     void Start()
     {
         instancja = this;
+        graRozpoczeta = true;
 
         Vector3 pozycjaGenerowania = punktStartowy.position;
         int tymczasoweKafelkiBezPrzeszkod = kafelkiBezPrzeszkod;
@@ -52,6 +60,8 @@ public class GeneratorPodloza : MonoBehaviour
             kafelek.transform.SetParent(transform);
             wygenerowaneKafelki.Add(kafelek);
         }
+
+        AktualizujUI();
     }
 
     void Update()
@@ -110,30 +120,33 @@ public class GeneratorPodloza : MonoBehaviour
                 }
             }
         // }
+
+        AktualizujUI();
     }
 
-    void OnGUI()
+    void AktualizujUI()
     {
-
-        GUI.skin.label.fontSize = 24;                   // 2 razy wieksza czcionka, default 12pxs
-
-        if (graSkonczona)
-    {
-        GUI.color = Color.red;
-        GUI.Label(new Rect(Screen.width / 2 - 150, Screen.height / 2 - 100, 300, 200),
-            "Koniec gry\nTwoj wynik: " + ((int)wynik) + "\nNacisnij SPACJE aby zrestartować");
-    }
-    else
-    {
-        if (!graRozpoczeta)
+        if (wynikTextMesh != null)
         {
-            GUI.color = Color.red;
-            GUI.Label(new Rect(Screen.width / 2 - 150, Screen.height / 2 - 100, 300, 400),
-                "SPACJA - START");
+            wynikTextMesh.text = "" + ((int)wynik);
         }
-    }
 
-    GUI.color = Color.green;
-    GUI.Label(new Rect(5, 5, 300, 150), "Wynik: " + ((int)wynik));
+        if (startTextMesh != null)
+        {
+            startTextMesh.gameObject.SetActive(!graSkonczona && !graRozpoczeta);
+            if (!graSkonczona && !graRozpoczeta)
+            {
+                startTextMesh.text = "SPACJA - START";
+            }
+        }
+
+        if (koniecGryTextMesh != null)
+        {
+            koniecGryTextMesh.gameObject.SetActive(graSkonczona);
+            if (graSkonczona)
+            {
+                koniecGryTextMesh.text = "Koniec gry\nTwoj wynik: " + ((int)wynik) + "\nNacisnij SPACJE aby zrestartować";
+            }
+        }
     }
 }
